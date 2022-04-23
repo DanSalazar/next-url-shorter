@@ -66,17 +66,10 @@ export default function Home() {
         .container {
           width: 100%;
           display: flex;
-          align-items: flex-start;
+          align-items: center;
           justify-content: center;
-          gap: 0 12px;
-        }
-
-        @media screen and (max-width: 325px) {
-          .container {
-            flex-direction: column;
-            gap: 8px 0;
-            align-items: center;
-          }
+          gap: 8px 12px;
+          flex-wrap: wrap;
         }
 
         @media screen and (min-width: 768px) {
