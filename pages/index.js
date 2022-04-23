@@ -2,9 +2,12 @@ import { useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import Input from '../components/Input'
+import Urls from '../components/Urls'
 
 export default function Home() {
   const [url, setUrl] = useState('')
+  const [urls, setUrls] = useState([])
+  const [errors, setErrors] = useState(false)
 
   const onSubmitUrl = () => {
     fetch('/api/url', {
@@ -15,7 +18,11 @@ export default function Home() {
       body: JSON.stringify({ url })
     })
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then(data => {
+        setUrls(urls.concat(data))
+        console.log(data, urls)
+      })
+      .catch(err => setErrors(true))
   }
 
   return (
@@ -27,15 +34,16 @@ export default function Home() {
         <h2>URL Shortener</h2>
         <div className="container">
           <Input placeholder={'Enter a url'} onChange={({ target }) => setUrl(target.value)} ></Input>
-          <button className="submit" onClick={onSubmitUrl}>
-            Create
+          <button className="btn submit" onClick={onSubmitUrl}>
+            Short
           </button>
         </div>
+        <Urls/>
       </main>
       <style jsx>{`
         h2 {
           font-size: 2.75em;
-          background: -webkit-linear-gradient(#0be881, #00d8d6);
+          background: var(--gradient);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           font-weight: 800;
@@ -44,19 +52,15 @@ export default function Home() {
         }
 
         .submit {
-          background-color: #00d8d6;
-          border-radius: 8px;
-          padding: 12px 24px;
-          border: 0;
-          outline: none;
-          transition: background-color 0.2s ease;
-          font-weight: 500;
-          font-family: inherit;
-          font-size: 1.25em;
+          background-color: var(--main-color);
+          padding: 8px 24px;
+          font-size: 1em;
+          color: #fff;
+          transition: background 300ms linear;
         }
 
         .submit:hover {
-          background-color: #34e7e4;
+          background-color: var(--main-color-hover);
         }
 
         .container {
@@ -65,8 +69,22 @@ export default function Home() {
           align-items: flex-start;
           justify-content: center;
           gap: 0 12px;
-          min-height: 400px;
         }
+
+        @media screen and (max-width: 325px) {
+          .container {
+            flex-direction: column;
+            gap: 8px 0;
+            align-items: center;
+          }
+        }
+
+        @media screen and (min-width: 768px) {
+          .submit {
+            font-size: 1.25em;
+            padding: 12px 24px;
+          }
+        }  
        `}</style>
     </div>
   )

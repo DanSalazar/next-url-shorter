@@ -4,11 +4,14 @@ function Layout({children}) {
 		<div>
 			{children}  
 			<style global jsx>{`
+				:root {
+					--gradient: linear-gradient(#45aaf2, #4b7bec);
+					--main-color: #4b7bec;
+					--main-color-hover: #3867d6;
+				}
+
 				body {
-					background: linear-gradient(-45deg, #2f3640, #353b48, #192a56, #273c75);
-					background-size: 400% 400%;
-					animation: gradient 15s ease infinite;
-					height: 100vh;
+					background: #f5f6fa;
 					padding: 0;
 				  margin: 0;
 				  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
@@ -24,16 +27,13 @@ function Layout({children}) {
 				  box-sizing: border-box;
 				}
 
-				@keyframes gradient {
-					0% {
-						background-position: 0% 50%;
-					}
-					50% {
-						background-position: 100% 50%;
-					}
-					100% {
-						background-position: 0% 50%;
-					}
+				.btn {
+					border: 0;
+          outline: none;
+          border-radius: 8px;
+          font-family: inherit;
+          font-weight: 500;
+          cursor: pointer;
 				}
 			`}
 			</style>
