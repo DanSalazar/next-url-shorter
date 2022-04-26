@@ -1,16 +1,27 @@
-function Urls() {
+import { useState } from 'react'
+import URLLink from './URLLink'
+
+function Urls({ urls }) {
+	const [alert, setAlert] = useState(false)
+
+	const copyUrl = (text) => {
+		navigator.clipboard.writeText(window.location + text)
+			.then(() => setAlert(true))
+			.catch(e => {
+				setAlert(false)
+				console.log(e)
+			})
+	}
+
 	return ( 
 		<div className='urls-container'>
-			<h3>Urls</h3>
 			<div className="urls-list">
-				<div className='url-item'>
-					<span className='url-hash'>www.example.com</span>
-					<button className='url-btn btn'>Copy</button>
-				</div>
-				<div className='url-item'>
-					<span className='url-hash'>www.example2.com</span>
-					<button className='url-btn btn'>Copy</button>
-				</div>
+				{urls.map(url => (
+					<div className='url-item' key={url.id} >
+						<URLLink shortUrl={url.shortUrl} />
+						<button className='url-btn btn' onClick={() => copyUrl(url.shortUrl)}>Copy</button>
+					</div>
+				))}
 			</div>
 			<style>{`
 				.urls-container {
@@ -43,16 +54,6 @@ function Urls() {
 					justify-content: space-between;
 				}
 
-				.url-hash {
-					font-weight: 500;
-					font-size: 1em;
-					background-color: #f0f0f0;
-					padding: 12px 16px;
-					border-radius: 8px;
-					flex: 2 0 auto;
-					color: var(--main-color);
-				}
-
 				.url-btn {
 					background-color: #2f3640;
 					color: #fff;
@@ -70,11 +71,9 @@ function Urls() {
 				}
 
 				@media screen and (max-width: 325px) {
-					.url-hash {
-						font-size: 0.75em;
-					}
           .url-btn {
-          	font-size: 0.75em;
+          	padding: 8px 16px;
+          	font-size: 0.5em;
           }
         }
 			`}</style>
