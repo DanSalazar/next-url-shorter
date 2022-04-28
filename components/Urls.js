@@ -4,28 +4,28 @@ import Spinner from './Spinner'
 import Button from './Button'
 
 function Urls({ urls, loading }) {
-	const copyUrl = (text) => {
-		navigator.clipboard.writeText(window.location + text)
-	}
+  const copyUrl = text => {
+    navigator.clipboard.writeText(window.location + text)
+  }
 
-	return ( 
-		<div className='urls-container'>
-			<div className="urls-list">
-				{urls.map(url => (
-					<div className='url-item' key={url.id} >
-						<URLLink shortUrl={url.shortUrl} />
-						<Button 
-							styles={`
+  return (
+    <div className='urls-container'>
+      <div className='urls-list'>
+        {urls.map(url => (
+          <div className='url-item' key={url.id}>
+            <URLLink shortUrl={url.shortUrl} />
+            <Button
+              styles={`
 								padding: 12px 24px;
-							`} 
-							onClick={() => copyUrl(url.shortUrl)}>
-								Copy
-						</Button>
-					</div>
-				))}
-			</div>
-			{loading && <Spinner/>}
-			<style>{`
+							`}
+              onClick={() => copyUrl(url.shortUrl)}>
+              Copy
+            </Button>
+          </div>
+        ))}
+      </div>
+      {loading && <Spinner />}
+      <style>{`
 				.urls-container {
 					width: 90%;
 					margin: 32px auto;
@@ -74,8 +74,8 @@ function Urls({ urls, loading }) {
           }
         }
 			`}</style>
-		</div>
-	)
+    </div>
+  )
 }
 
 export default Urls

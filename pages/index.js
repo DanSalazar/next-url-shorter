@@ -12,7 +12,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({ hasError: false, message: '' })
 
-  const onSubmitUrl = (e) => {
+  const onSubmitUrl = e => {
     e.preventDefault()
 
     if (!url.match(websiteRegex)) {
@@ -32,7 +32,7 @@ export default function Home() {
       body: JSON.stringify({ url })
     })
       .then(res => {
-        if (res.status === 500) throw new Error('An error has ocurred') 
+        if (res.status === 500) throw new Error('An error has ocurred')
         return res.json()
       })
       .then(data => {
@@ -52,16 +52,19 @@ export default function Home() {
       </Head>
       <main>
         <h2>URL Shortener</h2>
-        <form className='form-container' onSubmit={onSubmitUrl}  >
-          <Input placeholder={'Enter a url'} value={url} onChange={({ target }) => setUrl(target.value)} />
-          <Button 
-            color='var(--main-color)' 
+        <form className='form-container' onSubmit={onSubmitUrl}>
+          <Input
+            placeholder={'Enter a url'}
+            value={url}
+            onChange={({ target }) => setUrl(target.value)}
+          />
+          <Button
+            color='var(--main-color)'
             hover='var(--main-color-hover)'
             styles={`
               transition: background 300ms linear;
               padding: 8px 24px;
-            `} 
-            >
+            `}>
             Short
           </Button>
         </form>
@@ -108,8 +111,8 @@ export default function Home() {
             font-size: 1.25em;
             padding: 12px 24px;
           }
-        }  
-       `}</style>
+        }
+      `}</style>
     </div>
   )
 }

@@ -1,37 +1,34 @@
 import { PrismaClient } from '@prisma/client'
 
 function shortUrl() {
-	return (
-		<div>
-		</div>
-	)
+  return <div></div>
 }
 
 export async function getServerSideProps({ params }) {
-	const prisma = new PrismaClient()
-	const { shortUrl } = params
+  const prisma = new PrismaClient()
+  const { shortUrl } = params
 
-	const data = await prisma.Url.findUnique({
-		where: { shortUrl }
-	})
+  const data = await prisma.Url.findUnique({
+    where: { shortUrl }
+  })
 
-	prisma.$disconnect()
+  prisma.$disconnect()
 
-	if (!data) {
-		return {
-			redirect: {
-				destination: '/',
-				permanent: false
-			}
-		}
-	}
+  if (!data) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
 
-	return {
-		redirect: {
-			destination: data.url,
-			permanent: false
-		}
-	}
+  return {
+    redirect: {
+      destination: data.url,
+      permanent: false
+    }
+  }
 }
 
 export default shortUrl

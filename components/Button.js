@@ -1,11 +1,11 @@
 function Button({ children, color, hover, styles, onClick }) {
-	return (
-		<>
-			<button className='btn' onClick={onClick}>
+  return (
+    <>
+      <button className='btn' onClick={onClick}>
         {children}
-			</button>
-			<style jsx>{`
-				.btn {
+      </button>
+      <style jsx>{`
+        .btn {
           background-color: ${color || '#2f3640'};
           font-size: 1em;
           color: #fff;
@@ -21,9 +21,9 @@ function Button({ children, color, hover, styles, onClick }) {
         .btn:hover {
           background-color: ${hover || 'none'};
         }
-			`}</style>
-		</>
-	)
+      `}</style>
+    </>
+  )
 }
 
 export default Button
