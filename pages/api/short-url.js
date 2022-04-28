@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client'
 import { startsWithHttp } from '../../utils'
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') res.status(405)
+  if (req.method !== 'POST') return res.status(405)
   const prisma = new PrismaClient()
   const url = startsWithHttp(req.body.url) ? req.body.url : 'https://' + req.body.url
   const shortUrl = Math.random().
@@ -21,6 +21,6 @@ export default async function handler(req, res) {
 
     return res.status(200).send(data)
   } catch (error) {
-    return res.status(500).send(error)
+    return res.status(500)
   }
 }

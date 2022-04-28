@@ -1,16 +1,11 @@
 import { useState } from 'react'
 import URLLink from './URLLink'
+import Spinner from './Spinner'
+import Button from './Button'
 
-function Urls({ urls }) {
-	const [alert, setAlert] = useState(false)
-
+function Urls({ urls, loading }) {
 	const copyUrl = (text) => {
 		navigator.clipboard.writeText(window.location + text)
-			.then(() => setAlert(true))
-			.catch(e => {
-				setAlert(false)
-				console.log(e)
-			})
 	}
 
 	return ( 
@@ -19,14 +14,23 @@ function Urls({ urls }) {
 				{urls.map(url => (
 					<div className='url-item' key={url.id} >
 						<URLLink shortUrl={url.shortUrl} />
-						<button className='url-btn btn' onClick={() => copyUrl(url.shortUrl)}>Copy</button>
+						<Button 
+							styles={`
+								padding: 12px 24px;
+							`} 
+							onClick={() => copyUrl(url.shortUrl)}>
+								Copy
+						</Button>
 					</div>
 				))}
 			</div>
+			{loading && <Spinner/>}
 			<style>{`
 				.urls-container {
 					width: 90%;
 					margin: 32px auto;
+					display: grid;
+					place-items: center;
 				}
 
 				h3 {
@@ -52,13 +56,6 @@ function Urls({ urls }) {
 					display: flex;
 					gap: 0 16px;
 					justify-content: space-between;
-				}
-
-				.url-btn {
-					background-color: #2f3640;
-					color: #fff;
-					padding: 12px 24px;
-					font-size: 1em;
 				}
 
 				.url-link {

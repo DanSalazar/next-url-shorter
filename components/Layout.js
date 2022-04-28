@@ -26,15 +26,6 @@ function Layout({children}) {
 				* {
 				  box-sizing: border-box;
 				}
-
-				.btn {
-					border: 0;
-          outline: none;
-          border-radius: 8px;
-          font-family: inherit;
-          font-weight: 500;
-          cursor: pointer;
-				}
 			`}
 			</style>
 		</div>

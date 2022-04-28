@@ -3,11 +3,13 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Input from '../components/Input'
 import Urls from '../components/Urls'
+import Button from '../components/Button'
 import { websiteRegex } from '../utils'
 
 export default function Home() {
   const [url, setUrl] = useState('')
   const [urls, setUrls] = useState([])
+  const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({ hasError: false, message: '' })
 
   const onSubmitUrl = (e) => {
@@ -20,6 +22,8 @@ export default function Home() {
 
     setErrors({ hasError: false, message: '' })
 
+    setLoading(true)
+
     fetch('/api/short-url', {
       method: 'POST',
       headers: {
@@ -27,12 +31,18 @@ export default function Home() {
       },
       body: JSON.stringify({ url })
     })
-      .then(res => res.json())
+      .then(res => {
+        if (res.status === 500) throw new Error('An error has ocurred') 
+        return res.json()
+      })
       .then(data => {
         setUrls(urls.concat(data))
         setUrl('')
       })
-      .catch(err => setErrors({ hasError: true, message: 'An error has occurred' }))
+      .catch(err => {
+        setErrors({ hasError: true, message: err.message })
+      })
+      .finally(() => setLoading(false))
   }
 
   return (
@@ -44,14 +54,21 @@ export default function Home() {
         <h2>URL Shortener</h2>
         <form className='form-container' onSubmit={onSubmitUrl}  >
           <Input placeholder={'Enter a url'} value={url} onChange={({ target }) => setUrl(target.value)} />
-          <button className="btn submit" >
+          <Button 
+            color='var(--main-color)' 
+            hover='var(--main-color-hover)'
+            styles={`
+              transition: background 300ms linear;
+              padding: 8px 24px;
+            `} 
+            >
             Short
-          </button>
+          </Button>
         </form>
         <div className='error-container'>
           {errors.hasError && <span className='error'>{errors.message}</span>}
         </div>
-        <Urls urls={urls} />
+        <Urls urls={urls} loading={loading} />
       </main>
       <style jsx>{`
         h2 {
@@ -64,22 +81,9 @@ export default function Home() {
           text-align: center;
         }
 
-        .submit {
-          background-color: var(--main-color);
-          padding: 8px 24px;
-          font-size: 1em;
-          color: #fff;
-          transition: background 300ms linear;
-        }
-
-        .submit:hover {
-          background-color: var(--main-color-hover);
-        }
-
         .form-container {
           width: 100%;
           display: flex;
-          align-items: center;
           justify-content: center;
           gap: 8px 12px;
           flex-wrap: wrap;
