@@ -25,7 +25,7 @@ function Urls({ urls, loading }) {
         ))}
       </div>
       {loading && <Spinner />}
-      <style>{`
+      <style jsx>{`
 				.urls-container {
 					width: 90%;
 					margin: 32px auto;

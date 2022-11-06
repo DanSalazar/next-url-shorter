@@ -50,7 +50,7 @@ export default function Home() {
       <Head>
         <title>Next URL-Shorter</title>
       </Head>
-      <main>
+      <div>
         <h2>URL Shortener</h2>
         <form className='form-container' onSubmit={onSubmitUrl}>
           <Input
@@ -72,7 +72,7 @@ export default function Home() {
           {errors.hasError && <span className='error'>{errors.message}</span>}
         </div>
         <Urls urls={urls} loading={loading} />
-      </main>
+      </div>
       <style jsx>{`
         h2 {
           font-size: 2.75em;

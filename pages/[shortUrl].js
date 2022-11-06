@@ -12,7 +12,7 @@ export async function getServerSideProps({ params }) {
     where: { shortUrl }
   })
 
-  prisma.$disconnect()
+  await prisma.$disconnect()
 
   if (!data) {
     return {
