@@ -7,7 +7,7 @@ import Button from '../components/Button'
 import { websiteRegex } from '../utils'
 
 export default function Home() {
-  const [url, setUrl] = useState([])
+  const [url, setUrl] = useState('')
   const [urls, setUrls] = useState([])
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({ hasError: false, message: '' })
