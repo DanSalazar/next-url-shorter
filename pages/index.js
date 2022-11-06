@@ -4,19 +4,13 @@ import Image from 'next/image'
 import Input from '../components/Input'
 import Urls from '../components/Urls'
 import Button from '../components/Button'
-import { websiteRegex, saveInLocalStorage } from '../utils'
+import { websiteRegex } from '../utils'
 
 export default function Home() {
-  const [url, setUrl] = useState('')
+  const [url, setUrl] = useState([])
   const [urls, setUrls] = useState([])
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({ hasError: false, message: '' })
-
-  useEffect(() => {
-    if (window.localStorage) {
-      setUrls(JSON.parse(window.localStorage.getItem('urls')))
-    }
-  }, [])
 
   const onSubmitUrl = e => {
     e.preventDefault()
@@ -43,7 +37,6 @@ export default function Home() {
       })
       .then(data => {
         setUrls(urls.concat(data))
-        saveInLocalStorage(data)
         setUrl('')
       })
       .catch(err => {
